@@ -9,6 +9,7 @@ class PerceptronLayer:
         self.layerInput = layerInput
 
     def run(self):
+        self.output = []  # Reset the output
         for perceptron in self.perceptrons:
             perceptron.setInput(self.layerInput)
             perceptron.run()
