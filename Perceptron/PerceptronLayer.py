@@ -11,6 +11,7 @@ class PerceptronLayer:
     def run(self):
         for i in range(len(self.perceptrons)):
             perceptron = self.perceptrons[i]
+            perceptron.setInput(self.layerInput)
             perceptron.run()
             self.output.append(perceptron.ouput)
 
