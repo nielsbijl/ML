@@ -16,7 +16,7 @@ class TestPerceptron(unittest.TestCase):
         for testInput in inputAndPerceptron:
             andPerceptron.setInput(perceptronInput=testInput[0])
             andPerceptron.run()
-            self.assertEqual(andPerceptron.ouput, testInput[1])
+            self.assertEqual(andPerceptron.output, testInput[1])
 
     def testPerceptronINVERTGATE(self):
         """ Testing of the perceptron classe with the INVERT/NOT gate with every possible input"""
@@ -28,7 +28,7 @@ class TestPerceptron(unittest.TestCase):
         for testInput in inputInvertPerceptron:
             notPerceptron.setInput(perceptronInput=testInput[0])
             notPerceptron.run()
-            self.assertEqual(notPerceptron.ouput, testInput[1])
+            self.assertEqual(notPerceptron.output, testInput[1])
 
     def testPerceptronORGATE(self):
         """ Testing of the perceptron classe with the OR gate with every possible input"""
@@ -42,7 +42,7 @@ class TestPerceptron(unittest.TestCase):
         for testInput in inputOrPerceptron:
             orPerceptron.setInput(perceptronInput=testInput[0])
             orPerceptron.run()
-            self.assertEqual(orPerceptron.ouput, testInput[1])
+            self.assertEqual(orPerceptron.output, testInput[1])
 
     def testPerceptronNORGATE(self):
         """ Testing of the perceptron classe with the NOR gate with every possible input"""
@@ -59,7 +59,7 @@ class TestPerceptron(unittest.TestCase):
         for testInput in inputNorPerceptron:
             norPerceptron.setInput(perceptronInput=testInput[0])
             norPerceptron.run()
-            self.assertEqual(norPerceptron.ouput, testInput[1])
+            self.assertEqual(norPerceptron.output, testInput[1])
 
 
     def testPerceptronPARTY(self):
@@ -77,7 +77,7 @@ class TestPerceptron(unittest.TestCase):
         for testInput in inputPartyPerceptron:
             partyPerceptron.setInput(perceptronInput=testInput[0])
             partyPerceptron.run()
-            self.assertEqual(partyPerceptron.ouput, testInput[1])
+            self.assertEqual(partyPerceptron.output, testInput[1])
 
 
 if __name__ == '__main__':

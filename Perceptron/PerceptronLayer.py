@@ -6,14 +6,17 @@ class PerceptronLayer:
         self.output = []
 
     def setInput(self, layerInput: list):
-        self.layerInput = layerInput
+        if len(layerInput) >= len(self.perceptrons):
+            self.layerInput = layerInput
+        else:
+            raise Exception("Sorry, the length of your layer input doesn't match with the length of your perceptrons!!")
 
     def run(self):
         self.output = []  # Reset the output
         for perceptron in self.perceptrons:
             perceptron.setInput(self.layerInput)
             perceptron.run()
-            self.output.append(perceptron.ouput)
+            self.output.append(perceptron.output)
 
     def __str__(self):
         string = ""

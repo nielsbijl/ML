@@ -5,21 +5,24 @@ class Perceptron:
         self.input = []
         self.weights = weights
         self.bias = bias
-        self.ouput = None
+        self.output = None
 
     def setInput(self, perceptronInput: list):
-        self.input = perceptronInput
+        if len(perceptronInput) == len(self.weights):
+            self.input = perceptronInput
+        else:
+            raise Exception("Sorry, the length of your input is not equal to the length of your weights!!")
 
     def stepFunction(self, x):
         return 0 if x < 0 else 1
 
     def run(self):
-        self.ouput = 0
+        self.output = 0
         for i in range(len(self.input)):
-            self.ouput += self.input[i] * self.weights[i]
-        self.ouput -= self.bias
-        self.ouput = self.activationFunction(self.ouput)
+            self.output += self.input[i] * self.weights[i]
+        self.output -= self.bias
+        self.output = self.activationFunction(self.output)
 
     def __str__(self):
-        return f"input: {self.input}, weights: {self.weights}, bias: {self.bias}, output: {self.ouput}"
+        return f"input: {self.input}, weights: {self.weights}, bias: {self.bias}, output: {self.output}"
 
