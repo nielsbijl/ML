@@ -9,4 +9,9 @@ class PerceptronNetwork:
         self.networkInput = networkInput
 
     def feedForward(self):
-        pass
+        layerInput = self.networkInput
+        for layer in self.layers:
+            layer.setInput(layerInput)
+            layer.run()
+            layerInput = layer.output
+        self.output = layerInput
