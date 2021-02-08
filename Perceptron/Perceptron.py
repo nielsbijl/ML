@@ -2,13 +2,13 @@ class Perceptron:
 
     def __init__(self, weights: list, bias: int or float):
         self.activationFunction = self.stepFunction
-        self.input = None
+        self.input = []
         self.weights = weights
         self.bias = bias
         self.ouput = None
 
-    def setInput(self, input: list):
-        self.input = input
+    def setInput(self, perceptronInput: list):
+        self.input = perceptronInput
 
     def stepFunction(self, x):
         return 0 if x < 0 else 1
