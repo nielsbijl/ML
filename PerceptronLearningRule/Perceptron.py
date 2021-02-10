@@ -21,6 +21,11 @@ class Perceptron:
         self.bias = bias
         self.output = None
 
+        self.errorSum = 0
+        self.trainCount = 0
+        self.MSE = None
+
+
     def setInput(self, perceptronInput: list):
         """
         This function sets the input for the perceptron, this needs to match with the weights
@@ -77,6 +82,19 @@ class Perceptron:
             self.weights[i] = self.weights[i] + deltaW
         deltaB = learningRate * error
         self.bias = self.bias + deltaB
+
+        self.trainCount += 1
+        self.errorSum += error
+
+    def error(self):
+        """
+        This function calculates the Mean Suared Error (MSE) of all the training examples
+        """
+        if self.trainCount:
+            self.MSE = (self.errorSum ** 2) / self.trainCount
+        else:
+            raise Exception("The perceptron isn't been trained, please train the perceptron with the update function!")
+        return self.MSE
 
     def __str__(self):
         return f"input: {self.input}, weights: {self.weights}, bias: {self.bias}, output: {self.output}"
