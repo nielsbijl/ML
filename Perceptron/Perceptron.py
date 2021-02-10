@@ -47,7 +47,7 @@ class Perceptron:
             self.output = 0
             for i in range(len(self.input)):
                 self.output += self.input[i] * self.weights[i]
-            self.output -= self.bias
+            self.output += self.bias
             self.output = self.activationFunction(self.output)
         else:
             raise Exception("The perceptron has no input, please set the input with the setInput function!")
