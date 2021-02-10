@@ -1,6 +1,6 @@
 class Perceptron:
     """
-    The Perceptron class is perceptron node which can be used in a perceptron network.
+    The Perceptron class is a perceptron node which can be used in a perceptron network.
     """
 
     def __init__(self, weights: list, bias: int or float):
