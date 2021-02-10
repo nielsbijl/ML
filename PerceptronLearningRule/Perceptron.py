@@ -39,8 +39,11 @@ class Perceptron:
         """
         return 0 if x < 0 else 1
 
-    # def sigmoid(self, x):
-    #     return 1 / (1 + math.exp(-x))
+    def sigmoid(self, x):
+        return 1 / (1 + math.exp(-x))
+
+    def setSigmoidActivationFunction(self):
+        self.activationFunction = self.sigmoid
 
     def run(self):
         """
