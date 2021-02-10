@@ -84,7 +84,7 @@ class Perceptron:
         self.bias = self.bias + deltaB
 
         self.trainCount += 1
-        self.errorSum += error
+        self.errorSum += abs(error)
 
     def error(self):
         """
