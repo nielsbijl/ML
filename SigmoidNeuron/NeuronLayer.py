@@ -35,6 +35,6 @@ class NeuronLayer:
     def __str__(self):
         string = ""
         for neuron in self.neurons:
-            string += neuron.__str__() + '\n'
+            string += "neuron: " + neuron.__str__() + '\n'
         return string
 

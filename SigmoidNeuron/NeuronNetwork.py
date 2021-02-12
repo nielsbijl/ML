@@ -36,6 +36,6 @@ class NeuronNetwork:
 
     def __str__(self):
         string = ''
-        for i in range(self.layers):
+        for i in range(len(self.layers)):
             string += f"layer: {i}: \n {self.layers[i].__str__()} \n"
         return string

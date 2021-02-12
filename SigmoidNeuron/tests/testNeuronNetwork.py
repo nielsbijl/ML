@@ -31,7 +31,6 @@ class TestNeuronNetwork(unittest.TestCase):
                         [[1, 0], [1, 0]],
                         [[0, 1], [1, 0]],
                         [[0, 0], [0, 0]]]
-
         for testInput in inputNetwork:
             """ Set the input for the perceptron network """
             halfAdderNetwork.setInput(networkInput=testInput[0])
@@ -43,7 +42,9 @@ class TestNeuronNetwork(unittest.TestCase):
             output = [round(halfAdderNetwork.output[0]), round(halfAdderNetwork.output[1])]
             self.assertEqual(output, testInput[1])
 
-            """
-            Alleen door de float output af te ronden naar een integer is het mogelijk om met neurons een half adder
-            te maken!
-            """
+        """
+        Alleen door de float output af te ronden naar een integer is het mogelijk om met neurons een half adder
+        te maken!
+        """
+        print(halfAdderNetwork)
+
