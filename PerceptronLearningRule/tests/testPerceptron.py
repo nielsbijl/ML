@@ -50,6 +50,7 @@ class TestPerceptron(unittest.TestCase):
 
         """Wat zijn de uiteindelijke parameters van de perceptron?"""
         print("AND final parameters:"+ andPerceptron.__str__())
+        print("AND MSE:", andPerceptron.error())
 
     def testPerceptronXORGATE(self):
         """
@@ -93,6 +94,7 @@ class TestPerceptron(unittest.TestCase):
 
         """Wat zijn de uiteindelijke parameters van de perceptron?"""
         print("XOR final parameters:" + xorPerceptron.__str__())
+        print("XOR MSE:", xorPerceptron.error())
 
     """
     UITLEG: Waarom werkt het niet? 
