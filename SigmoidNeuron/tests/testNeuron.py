@@ -21,7 +21,7 @@ class TestNeuron(unittest.TestCase):
         """
         De andNeuron gate is alleen maar mogelijk bij het afronden van de output floats naar integers 
         """
-        andNeuron = Neuron([130, 230], -320)
+        andNeuron = Neuron(weights=[80, 80], bias=-100)
 
         for testInput in inputAndNeuron:
             andNeuron.setInput(neuronInput=testInput[0])
@@ -66,7 +66,7 @@ class TestNeuron(unittest.TestCase):
         """
         De orNeuron gate is alleen maar mogelijk bij het afronden van de output floats naar integers.
         """
-        orNeuron = Neuron(weights=[100, 100], bias=0)
+        orNeuron = Neuron(weights=[100, 100], bias=-50)
         for testInput in inputOrNeuron:
             orNeuron.setInput(neuronInput=testInput[0])
             orNeuron.run()
