@@ -32,10 +32,10 @@ class TestNeuronNetwork(unittest.TestCase):
                         [[0, 1], [1, 0]],
                         [[0, 0], [0, 0]]]
         for testInput in inputNetwork:
-            """ Set the input for the perceptron network """
+            """ Set the input for the neuron network """
             halfAdderNetwork.setInput(networkInput=testInput[0])
 
-            """ Run perceptron network """
+            """ Run neuron network """
             halfAdderNetwork.feedForward()
 
             """ Test of the output is correct """

@@ -29,7 +29,7 @@ class TestNeuron(unittest.TestCase):
             self.assertEqual(int(andNeuron.output), testInput[1])
 
     def testNeuronINVERTGATE(self):
-        """ Testing of the perceptron classe with the INVERT/NOT gate with every possible input"""
+        """ Testing of the neuron classe with the INVERT/NOT gate with every possible input"""
         notNeuron = Neuron(weights=[-1], bias=0)
 
         inputInvertNeuron = [[[1], 0],
