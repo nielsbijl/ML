@@ -38,7 +38,7 @@ class Perceptron:
     def stepFunction(self, x):
         """
         This is the step function, this will be used as the default activation function for the perceptron
-        :param x: The sum of all the (inputs * weights) - bias
+        :param x: The sum of all the (inputs * weights) + bias
         :return: If the perceptron will be active or not
         """
         return 0 if x < 0 else 1
@@ -48,7 +48,6 @@ class Perceptron:
         This function will run the perceptron.
         It multiplys every input with it's matching weight and takes the sum of this. It will be subtracted by the bias.
         Then given to the activation function and this will chose of the perceptron is active or not.
-        :return:
         """
         if self.input:
             self.output = 0
