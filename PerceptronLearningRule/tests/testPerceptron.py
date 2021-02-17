@@ -100,7 +100,7 @@ class TestPerceptron(unittest.TestCase):
     UITLEG: Waarom werkt het niet? 
     
     Een enkele perceptron heeft geen mogelijkheid om de XOR functionaliteit te 
-    krijgen, omdat dit geen linear probleem is. Hier is een netwerk voor nodig. Het is jammer genoeg met de step 
+    krijgen, omdat dit geen linear scheidbaar probleem is. Hier is een netwerk voor nodig. Het is jammer genoeg met de step 
     functie niet mogelijk om een netwerk te trainen. Waardoor het niet mogelijk is om backpropagation te gebruiken 
     bij een netwerk van perceptrons. Dit kan gelukkig wel bij sigmoid neuron omdat de sigmoid functie dit wel toelaat.
     

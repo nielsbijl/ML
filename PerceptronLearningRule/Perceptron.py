@@ -6,7 +6,7 @@ class Perceptron:
     The Perceptron class is a perceptron node which can be used in a perceptron network.
     """
 
-    def __init__(self, weights: list, bias: int or float):
+    def __init__(self, weights: list, bias):
         """
         This function initializes the Perceptron object
         :param weights: The weights your input will be multiplied with
@@ -24,7 +24,6 @@ class Perceptron:
         self.errorSum = 0
         self.trainCount = 0
         self.MSE = None
-
 
     def setInput(self, perceptronInput: list):
         """
@@ -60,7 +59,7 @@ class Perceptron:
         else:
             raise Exception("The perceptron has no input, please set the input with the setInput function!")
 
-    def update(self, expectedOutput: int or float, learningRate: int or float = 0.1):
+    def update(self, expectedOutput, learningRate=0.1):
         """
         This function contains the Perceptron Learning Rule
         The Perceptron Learning Rule makes it possible to fit the perceptron
