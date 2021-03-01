@@ -22,6 +22,10 @@ class Neuron:
         self.bias = bias
         self.output = None
 
+        self.error = None
+        self.newWeights = []
+        self.newBias = None
+
     def setInput(self, neuronInput: list):
         """
         This function sets the input for the neuron, this needs to match with the weights
@@ -54,6 +58,38 @@ class Neuron:
             self.output = self.activationFunction(self.output)
         else:
             raise Exception("The neuron has no input, please set the input with the setInput function!")
+
+    def setError(self, expectedOutput, weightsNextNeuron=[], errorNextNeuron=[]):
+        if self.output:
+            if weightsNextNeuron and errorNextNeuron:  # if this neuron is not an end neuron
+                sumFromNextNodes = 0
+                for i in range(len(weightsNextNeuron)):
+                    sumFromNextNodes += weightsNextNeuron[i] * errorNextNeuron[i]
+                self.error = self.output * (1 - self.output) * sumFromNextNodes
+            else:  # if the neuron is an end neuron
+                self.error = self.output * (1 - self.output) * -(expectedOutput - self.output)
+        else:
+            raise Exception("The neuron has no output, please run the neuron with the run function!")
+
+    def backPropagation(self, learningRate):
+        if self.error:
+            self.newWeights = []
+            for i in range(len(self.weights)):
+                self.newWeights.append(self.weights[i] - learningRate * self.input[i] * self.error)
+            self.newBias = self.bias - learningRate * self.error
+        else:
+            raise Exception("The neuron has no error, please set the error with the setError function!")
+
+    def update(self):
+        if self.newBias:
+            if self.newWeights:
+                self.weights = self.newWeights
+                self.bias = self.newBias
+            else:
+                raise Exception("The neuron has no newWeights, please set the newWeights with the backPropagation "
+                                "function!")
+        else:
+            raise Exception("The neuron has no newBias, please set the newBias with the backPropagation function!")
 
     def __str__(self):
         return f"input: {self.input}, weights: {self.weights}, bias: {self.bias}, output: {self.output}"
