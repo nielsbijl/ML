@@ -58,6 +58,7 @@ class Neuron:
             self.output = self.activationFunction(self.output)
         else:
             raise Exception("The neuron has no input, please set the input with the setInput function!")
+        return self.output
 
     def setError(self, expectedOutput, weightsNextNeuron=[], errorNextNeuron=[]):
         if self.output:
@@ -92,4 +93,5 @@ class Neuron:
             raise Exception("The neuron has no newBias, please set the newBias with the backPropagation function!")
 
     def __str__(self):
-        return f"input: {self.input}, weights: {self.weights}, bias: {self.bias}, output: {self.output}"
+        return f"input: {self.input}, weights: {self.weights}, bias: {self.bias}, output: {self.output}," \
+               f" error: {self.error} "
