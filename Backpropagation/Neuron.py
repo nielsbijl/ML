@@ -68,7 +68,7 @@ class Neuron:
                     sumFromNextNodes += weightsNextNeuron[i] * errorNextNeuron[i]
                 self.error = self.output * (1 - self.output) * sumFromNextNodes
             else:  # if the neuron is an end neuron
-                self.error = self.output * (1 - self.output) * -(expectedOutput[0] - self.output)
+                self.error = self.output * (1 - self.output) * -(expectedOutput - self.output)
         else:
             raise Exception("The neuron has no output, please run the neuron with the run function!")
 

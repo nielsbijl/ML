@@ -48,7 +48,7 @@ class NeuronLayer:
                     self.errors.append(self.neurons[i].error)
             else:
                 for i in range(len(self.neurons)):
-                    self.neurons[i].setError(expectedOutput)
+                    self.neurons[i].setError(expectedOutput[i])
                     self.errors.append(self.neurons[i].error)
         else:
             raise Exception("The neuron layer has no output, please run the neuron with the run function!")
