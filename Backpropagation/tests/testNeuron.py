@@ -26,7 +26,7 @@ class testNeuron(unittest.TestCase):
             for row in truthTable:
                 andNeuron.setInput(row[0])
                 andNeuron.run()
-                andNeuron.setError(row[1])
+                andNeuron.setError([row[1]])
                 andNeuron.backPropagation(1)
                 andNeuron.update()
 
