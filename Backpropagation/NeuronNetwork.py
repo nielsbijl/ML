@@ -33,6 +33,24 @@ class NeuronNetwork:
             self.output = layerInput
         else:
             raise Exception("The neuron network has no input, please set the input with the setInput function!")
+        return self.output
+
+    def train(self, inputs, targets, learningRate):
+        for x in range(len(inputs)):
+            self.setInput(inputs[x])
+            self.feedForward()
+            for i in range(len(self.layers)):
+                i = i * -1
+                if i == 0:
+                    self.layers[i - 1].setErrorLayer(expectedOutput=targets[x])
+                else:
+                    self.layers[i - 1].setErrorLayer(expectedOutput=targets[x],
+                                                     weightsNextLayer=self.layers[i].weights,
+                                                     errorNextLayer=self.layers[i].errors)
+            for i in range(len(self.layers)):
+                i = i * -1
+                self.layers[i - 1].backPropagationLayer(learningRate)
+                self.layers[i - 1].updateLayer()
 
     def __str__(self):
         string = ''
