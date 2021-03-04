@@ -12,6 +12,9 @@ class NeuronNetwork:
         self.networkInput = []
         self.output = []
 
+        self.losses = []
+        self.MSE = None
+
     def setInput(self, networkInput: list):
         """
         This function sets the input for the network
@@ -35,6 +38,21 @@ class NeuronNetwork:
             raise Exception("The neuron network has no input, please set the input with the setInput function!")
         return self.output
 
+    def calculateLoss(self, expectedOutput: list):
+        lossSum = 0
+        for i in range(len(expectedOutput)):
+            lossSum += (abs(expectedOutput[i] - self.output[i]) ** 2)
+        loss = lossSum / len(expectedOutput)
+        self.losses.append(loss)
+        self.MSE = None
+        return loss
+
+    def calculateTotalLoss(self):
+        MSE = sum(self.losses) / 2 * len(self.losses)
+        self.losses = []
+        self.MSE = MSE
+        return MSE
+
     def train(self, inputs, targets, learningRate, epochs: int = 0):
         for epoch in range(epochs):
             for x in range(len(inputs)):
@@ -52,6 +70,8 @@ class NeuronNetwork:
                     i = i * -1
                     self.layers[i - 1].backPropagationLayer(learningRate)
                     self.layers[i - 1].updateLayer()
+                self.calculateLoss(expectedOutput=targets[x])
+            print(self.calculateTotalLoss())
 
     def __str__(self):
         string = ''
