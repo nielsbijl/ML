@@ -53,7 +53,7 @@ class NeuronNetwork:
         self.MSE = MSE
         return MSE
 
-    def train(self, inputs, targets, learningRate, epochs: int = 0):
+    def train(self, inputs, targets, learningRate, epochs: int = 1, maxMSE=0):
         for epoch in range(epochs):
             for x in range(len(inputs)):
                 self.setInput(inputs[x])
@@ -71,7 +71,9 @@ class NeuronNetwork:
                     self.layers[i - 1].backPropagationLayer(learningRate)
                     self.layers[i - 1].updateLayer()
                 self.calculateLoss(expectedOutput=targets[x])
-            print(self.calculateTotalLoss())
+            self.calculateTotalLoss()
+            if self.MSE < maxMSE:
+                break
 
     def __str__(self):
         string = ''
