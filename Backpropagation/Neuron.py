@@ -73,7 +73,7 @@ class Neuron:
             raise Exception("The neuron has no output, please run the neuron with the run function!")
 
     def backPropagation(self, learningRate):
-        if self.error:
+        if self.error != None:
             self.newWeights = []
             for i in range(len(self.weights)):
                 self.newWeights.append(self.weights[i] - learningRate * self.input[i] * self.error)
