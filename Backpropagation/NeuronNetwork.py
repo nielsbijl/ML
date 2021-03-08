@@ -41,14 +41,14 @@ class NeuronNetwork:
     def calculateLoss(self, expectedOutput: list):
         lossSum = 0
         for i in range(len(expectedOutput)):
-            lossSum += (abs(expectedOutput[i] - self.output[i]) ** 2)
+            lossSum += (expectedOutput[i] - self.output[i]) ** 2
         loss = lossSum / len(expectedOutput)
         self.losses.append(loss)
         self.MSE = None
         return loss
 
     def calculateTotalLoss(self):
-        MSE = sum(self.losses) / 2 * len(self.losses)
+        MSE = sum(self.losses) / len(self.losses)
         self.losses = []
         self.MSE = MSE
         return MSE
@@ -71,9 +71,21 @@ class NeuronNetwork:
                     self.layers[i - 1].backPropagationLayer(learningRate)
                     self.layers[i - 1].updateLayer()
                 self.calculateLoss(expectedOutput=targets[x])
-            self.calculateTotalLoss()
+            print(self.calculateTotalLoss())
+            # print(self.layers[0].neurons[0])
+            # print(self.layers[0].neurons[1])
             if self.MSE < maxMSE:
                 break
+
+    def score(self, inputs: list, targets: list):
+        true = 0
+        for i in range(len(inputs)):
+            self.setInput(inputs[i])
+            outp = self.feedForward()
+            if outp.index(max(outp)) == targets[i].index(max(targets[i])):
+                true += 1
+
+        return true / len(targets) * 100
 
     def __str__(self):
         string = ''
