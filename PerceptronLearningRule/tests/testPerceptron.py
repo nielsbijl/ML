@@ -36,9 +36,13 @@ class TestPerceptron(unittest.TestCase):
         self.assertNotEqual(testOutp, predOutp)
 
         """ Learning the andPerceptron """
-        for i in range(len(truthTable)):
-            andPerceptron.setInput(truthTable[i][0])
-            andPerceptron.update(truthTable[i][1], learningRate=0.8)
+        epochs = 100
+        while epochs > 0:
+            for i in range(len(truthTable)):
+                andPerceptron.setInput(truthTable[i][0])
+                andPerceptron.update(truthTable[i][1], learningRate=0.8)
+                print(epochs)
+            epochs -= 1
 
         """ Proving the andPerceptron is now valid """
         predOutp = []

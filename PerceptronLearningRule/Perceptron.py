@@ -76,14 +76,14 @@ class Perceptron:
         self.bias = self.bias + deltaB
 
         self.trainCount += 1
-        self.errorSum += abs(error)
+        self.errorSum += error ** 2
 
     def error(self):
         """
         This function calculates the Mean Suared Error (MSE) of all the training examples
         """
         if self.trainCount:
-            self.MSE = (self.errorSum ** 2) / self.trainCount
+            self.MSE = self.errorSum / self.trainCount
         else:
             raise Exception("The perceptron isn't been trained, please train the perceptron with the update function!")
         return self.MSE
