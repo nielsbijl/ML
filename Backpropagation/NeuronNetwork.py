@@ -71,9 +71,7 @@ class NeuronNetwork:
                     self.layers[i - 1].backPropagationLayer(learningRate)
                     self.layers[i - 1].updateLayer()
                 self.calculateLoss(expectedOutput=targets[x])
-            print(self.calculateTotalLoss())
-            # print(self.layers[0].neurons[0])
-            # print(self.layers[0].neurons[1])
+            self.calculateTotalLoss()
             if self.MSE < maxMSE:
                 break
 
