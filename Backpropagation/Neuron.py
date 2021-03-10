@@ -42,7 +42,12 @@ class Neuron:
         :param x: The sum of all the (inputs * weights) + bias
         :return: The output of the sigmoid function
         """
-        return 1 / (1 + math.exp(-x))
+        if x > 6:  # for the overflow exception
+            return 1
+        elif x < -6:  # for the overflow exception
+            return 0
+        else:
+            return 1 / (1 + math.exp(-x))
 
     def run(self):
         """
@@ -50,7 +55,7 @@ class Neuron:
         It multiplys every input with it's matching weight and takes the sum of this. It will be added by the bias.
         Then given to the activation function and this will calculate the output of this neuron.
         """
-        if self.input:
+        if self.input != []:
             self.output = 0
             for i in range(len(self.input)):
                 self.output += self.input[i] * self.weights[i]
@@ -61,7 +66,7 @@ class Neuron:
         return self.output
 
     def setError(self, expectedOutput, weightsNextNeuron=[], errorNextNeuron=[]):
-        if self.output:
+        if self.output != None:
             if weightsNextNeuron and errorNextNeuron:  # if this neuron is not an end neuron
                 sumFromNextNodes = 0
                 for i in range(len(weightsNextNeuron)):
@@ -82,7 +87,7 @@ class Neuron:
             raise Exception("The neuron has no error, please set the error with the setError function!")
 
     def update(self):
-        if self.newBias:
+        if self.newBias != None:
             if self.newWeights:
                 self.weights = self.newWeights
                 self.bias = self.newBias
@@ -91,7 +96,6 @@ class Neuron:
                                 "function!")
         else:
             raise Exception("The neuron has no newBias, please set the newBias with the backPropagation function!")
-        # self.error = None
         self.newWeights = []
         self.newBias = None
 
