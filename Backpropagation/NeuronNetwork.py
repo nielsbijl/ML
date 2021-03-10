@@ -107,7 +107,7 @@ class NeuronNetwork:
                 self.layers[i - 1].backPropagationLayer(learningRate)
                 self.layers[i - 1].updateLayer()
             self.calculateLoss(expectedOutput=targets[x])
-        print(self.calculateTotalLoss())
+        self.calculateTotalLoss()
 
     def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, maxMSE=0,
             normalizeInputs: bool = False, maxTime: int = None):
