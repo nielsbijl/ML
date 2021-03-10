@@ -1,3 +1,26 @@
+import time
+
+
+def normalize2DList(inputs: list):
+    """
+    This function normalizes a 2 dimensional list
+    :param inputs: 2d list of inputs
+    :return: 2d list of normalized inputs
+    """
+    normalizedInputs = []
+    maxInput = 1
+    for row in inputs:  # Searching the max of the inputs
+        rowMax = max(row)
+        if rowMax > maxInput:
+            maxInput = rowMax
+    for row in inputs:
+        normalizedRow = []
+        for item in row:
+            normalizedRow.append(item / maxInput)
+        normalizedInputs.append(normalizedRow)
+    return normalizedInputs
+
+
 class NeuronNetwork:
     """
     The NeuronNetwork class is a network of neurons, this contains layers which contains neurons
@@ -39,6 +62,11 @@ class NeuronNetwork:
         return self.output
 
     def calculateLoss(self, expectedOutput: list):
+        """
+        This function calculates the loss of the network with one training example
+        :param expectedOutput:
+        :return:
+        """
         lossSum = 0
         for i in range(len(expectedOutput)):
             lossSum += (expectedOutput[i] - self.output[i]) ** 2
@@ -48,32 +76,62 @@ class NeuronNetwork:
         return loss
 
     def calculateTotalLoss(self):
+        """
+        This function calculates the total loss of the network (AKA MSE)
+        :return: Mean Squared Error
+        """
         MSE = sum(self.losses) / len(self.losses)
         self.losses = []
         self.MSE = MSE
         return MSE
 
-    def train(self, inputs, targets, learningRate, epochs: int = 1, maxMSE=0):
+    def train(self, inputs: list, targets: list, learningRate):
+        """
+        This function will train the neural network for 1 epoch
+        :param inputs: A 2d array of inputs
+        :param targets: A 2d array of targets
+        :param learningRate: The rate you want the network to train
+        """
+        for x in range(len(inputs)):
+            self.setInput(inputs[x])
+            self.feedForward()
+            for i in range(len(self.layers)):
+                i = i * -1
+                if i == 0:
+                    self.layers[i - 1].setErrorLayer(expectedOutput=targets[x])
+                else:
+                    self.layers[i - 1].setErrorLayer(expectedOutput=targets[x],
+                                                     weightsNextLayer=self.layers[i].weights,
+                                                     errorNextLayer=self.layers[i].errors)
+            for i in range(len(self.layers)):
+                i = i * -1
+                self.layers[i - 1].backPropagationLayer(learningRate)
+                self.layers[i - 1].updateLayer()
+            self.calculateLoss(expectedOutput=targets[x])
+        print(self.calculateTotalLoss())
+
+    def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, maxMSE=0,
+            normalizeInputs: bool = False, maxTime: int = None):
+        """
+        This function fits the neural network
+        :param inputs: A 2d array of inputs
+        :param targets: A 2d array of outputs
+        :param learningRate: The rate you want the network to learn
+        :param epochs: The maximal epochs the network will train with
+        :param maxMSE: If the network has this MSE it will stop training
+        :param normalizeInputs: If you want the network to uses the inputs normalized
+        :param maxTime: The maximal of seconds the network is allowed to train
+        """
+        startTime = time.time()
+        if normalizeInputs:
+            inputs = normalize2DList(inputs)
         for epoch in range(epochs):
-            for x in range(len(inputs)):
-                self.setInput(inputs[x])
-                self.feedForward()
-                for i in range(len(self.layers)):
-                    i = i * -1
-                    if i == 0:
-                        self.layers[i - 1].setErrorLayer(expectedOutput=targets[x])
-                    else:
-                        self.layers[i - 1].setErrorLayer(expectedOutput=targets[x],
-                                                         weightsNextLayer=self.layers[i].weights,
-                                                         errorNextLayer=self.layers[i].errors)
-                for i in range(len(self.layers)):
-                    i = i * -1
-                    self.layers[i - 1].backPropagationLayer(learningRate)
-                    self.layers[i - 1].updateLayer()
-                self.calculateLoss(expectedOutput=targets[x])
-            self.calculateTotalLoss()
+            self.train(inputs=inputs, targets=targets, learningRate=learningRate)
             if self.MSE < maxMSE:
                 break
+            if maxTime:
+                if (time.time() - startTime) > maxTime:
+                    break
 
     def score(self, inputs: list, targets: list):
         true = 0
@@ -82,7 +140,6 @@ class NeuronNetwork:
             outp = self.feedForward()
             if outp.index(max(outp)) == targets[i].index(max(targets[i])):
                 true += 1
-
         return true / len(targets) * 100
 
     def __str__(self):

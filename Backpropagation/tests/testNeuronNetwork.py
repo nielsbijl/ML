@@ -27,7 +27,7 @@ class testNeuronNetwork(unittest.TestCase):
             self.assertNotAlmostEqual(targets[i][0], xorNetwork.feedForward()[0], delta=0.1)
 
         # Het netwerk trainen
-        xorNetwork.train(inputs, targets, 1, epochs=1000)
+        xorNetwork.fit(inputs, targets, 1, epochs=1000)
 
         # Laten zien dat het netwerk nu werkt
         for i in range(len(inputs)):
@@ -61,7 +61,7 @@ class testNeuronNetwork(unittest.TestCase):
                 self.assertNotAlmostEqual(targets[i][x], output[x], delta=0.1)
 
         # Het netwerk trainen
-        halfAdder.train(inputs, targets, 1, epochs=10000)
+        halfAdder.fit(inputs, targets, 1, epochs=10000)
 
         # Laten zien dat het netwerk nu werkt
         for i in range(len(inputs)):
