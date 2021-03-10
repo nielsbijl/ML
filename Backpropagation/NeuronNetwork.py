@@ -70,10 +70,9 @@ class NeuronNetwork:
         lossSum = 0
         for i in range(len(expectedOutput)):
             lossSum += (expectedOutput[i] - self.output[i]) ** 2
-        loss = lossSum / len(expectedOutput)
-        self.losses.append(loss)
+        self.losses.append(lossSum)
         self.MSE = None
-        return loss
+        return lossSum
 
     def calculateTotalLoss(self):
         """
