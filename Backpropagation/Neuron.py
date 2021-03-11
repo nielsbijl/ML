@@ -66,6 +66,16 @@ class Neuron:
         return self.output
 
     def setError(self, expectedOutput, weightsNextNeuron=[], errorNextNeuron=[]):
+        """
+        This function calculates the error of this neuron
+        :param expectedOutput: If this neuron is an end neuron
+                                    it needs the expected output to calculate the error
+        :param weightsNextNeuron: If this neuron is not an end neuron
+                                    it needs the weight of the next neuron
+        :param errorNextNeuron: If this neuron is not an end neuron
+                                    it needs the error of the next neuron to
+                                        calculates it's own error
+        """
         if self.output != None:
             if weightsNextNeuron and errorNextNeuron:  # if this neuron is not an end neuron
                 sumFromNextNodes = 0
@@ -78,6 +88,10 @@ class Neuron:
             raise Exception("The neuron has no output, please run the neuron with the run function!")
 
     def backPropagation(self, learningRate):
+        """
+        This function calculates the new weights and it's new bias
+        :param learningRate: The rate this neuron needs to learn
+        """
         if self.error != None:
             self.newWeights = []
             for i in range(len(self.weights)):
@@ -87,6 +101,9 @@ class Neuron:
             raise Exception("The neuron has no error, please set the error with the setError function!")
 
     def update(self):
+        """
+        This function sets the new weights and it's new bias.
+        """
         if self.newBias != None:
             if self.newWeights:
                 self.weights = self.newWeights

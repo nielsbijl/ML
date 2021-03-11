@@ -13,6 +13,7 @@ class NeuronLayer:
         self.output = []
 
         self.weights = [neuron.weights for neuron in self.neurons]
+        self.errorNextNeurons = []
         self.errors = []
 
     def setInput(self, layerInput: list):
@@ -37,7 +38,14 @@ class NeuronLayer:
         return self.output
 
     def setErrorLayer(self, expectedOutput: list, weightsNextLayer: list = [], errorNextLayer: list = []):
-        self.errorNextNeurons = []
+        """
+        This function calculates the error of this layer. It loops over all the neurons
+        of this layer and sets the errors.
+        :param expectedOutput: The expected output of the network for one training example
+        :param weightsNextLayer: The weights to the next layer
+        :param errorNextLayer: The error of the neurons of the next layer
+        """
+        self.errorNextNeurons = []  # Reset the errors of the neurons of the next layer
         if self.output:
             if weightsNextLayer and errorNextLayer:
                 for i in range(len(self.neurons)):
@@ -54,12 +62,19 @@ class NeuronLayer:
             raise Exception("The neuron layer has no output, please run the neuron with the run function!")
 
     def backPropagationLayer(self, learningRate):
+        """
+        This function calculates the new weights ans biases of the neurons of this layer.
+        :param learningRate: The rate you want the neurons to learn
+        """
         for neuron in self.neurons:
             neuron.backPropagation(learningRate)
         self.errors = []
         self.weights = [neuron.weights for neuron in self.neurons]
 
     def updateLayer(self):
+        """
+        This function sets all the new weights and biases of the neurons in this layer.
+        """
         for neuron in self.neurons:
             neuron.update()
 

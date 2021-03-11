@@ -65,22 +65,22 @@ class NeuronNetwork:
         """
         This function calculates the loss of the network with one training example
         :param expectedOutput:
-        :return:
+        :return: The loss of one training example
         """
         lossSum = 0
         for i in range(len(expectedOutput)):
             lossSum += (expectedOutput[i] - self.output[i]) ** 2
         self.losses.append(lossSum)
-        self.MSE = None
+        self.MSE = None  # Reset the MSE
         return lossSum
 
     def calculateTotalLoss(self):
         """
         This function calculates the total loss of the network (AKA MSE)
-        :return: Mean Squared Error
+        :return: Mean Squared Error of the neural network
         """
         MSE = sum(self.losses) / len(self.losses)
-        self.losses = []
+        self.losses = []  # Reset the losses
         self.MSE = MSE
         return MSE
 
@@ -133,6 +133,12 @@ class NeuronNetwork:
                     break
 
     def score(self, inputs: list, targets: list):
+        """
+        This function calculates the score of the neural network on the given data
+        :param inputs: 2 dimensional list of inputs
+        :param targets: 2 dimensional list of targets
+        :return: The score of the neural network
+        """
         true = 0
         for i in range(len(inputs)):
             self.setInput(inputs[i])
