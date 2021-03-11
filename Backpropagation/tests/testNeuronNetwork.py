@@ -6,6 +6,7 @@ from Backpropagation.NeuronNetwork import *
 
 class testNeuronNetwork(unittest.TestCase):
     def testXORgate(self):
+        """ De test case van de XOR gate precies zoals uit het werkboek"""
         # De waarheidstabel van de XOR gate
         inputs = [[1, 1],
                   [1, 0],
@@ -35,6 +36,7 @@ class testNeuronNetwork(unittest.TestCase):
             self.assertAlmostEqual(targets[i][0], xorNetwork.feedForward()[0], delta=0.1)
 
     def testHalfAdder(self):
+        """ De test case van de half adder precies zoals uit het werkboek"""
         inputs = [[0, 0],
                   [1, 0],
                   [0, 1],
