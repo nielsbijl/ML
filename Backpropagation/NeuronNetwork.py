@@ -109,8 +109,7 @@ class NeuronNetwork:
             self.calculateLoss(expectedOutput=targets[x])
         self.calculateTotalLoss()
 
-    def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, maxMSE=0,
-            normalizeInputs: bool = False, maxTime: int = None):
+    def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, maxMSE=0, maxTime: int = None):
         """
         This function fits the neural network
         :param inputs: A 2d array of inputs
@@ -122,8 +121,6 @@ class NeuronNetwork:
         :param maxTime: The maximal of seconds the network is allowed to train
         """
         startTime = time.time()
-        if normalizeInputs:
-            inputs = normalize2DList(inputs)
         for epoch in range(epochs):
             self.train(inputs=inputs, targets=targets, learningRate=learningRate)
             if self.MSE < maxMSE:
