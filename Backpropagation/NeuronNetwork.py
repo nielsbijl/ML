@@ -1,4 +1,5 @@
 import time
+import math
 
 
 def normalize2DList(inputs: list):
@@ -79,7 +80,7 @@ class NeuronNetwork:
         This function calculates the total loss of the network (AKA MSE)
         :return: Mean Squared Error of the neural network
         """
-        for x in range(len(inputs)):
+        for x in range(len(inputs)):  # Alle losses uitrekenen over het netwerk
             self.setInput(inputs[x])
             self.feedForward()
             self.calculateLoss(expectedOutput=targets[x])
@@ -113,9 +114,53 @@ class NeuronNetwork:
                 self.layers[i - 1].updateLayer()
         self.calculateTotalLoss(inputs, targets)
 
-    def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, maxMSE=0, maxTime: int = None):
+    def trainBatches(self, inputs: list, targets: list, learningRate, batchSize: int):
+        # Note: Ik heb de normale train functie ook laten staan zodat het overzichtelijk wordt wat ik doe.
+        #       Het is natuurlijk ook mogelijk om deze functie een batchSize van 1 te geven,
+        #       dan doet die precies het zelfde als de normale train functie.
+        """
+        This function trains this network for 1 epoch
+        :param batchSize: The size of the batch it will calculates his mean error on
+        :param inputs: A 2d array of inputs
+        :param targets: A 2d array of targets
+        :param learningRate: The rate you want the network to train
+        """
+        index0, indexBatchSize = 0, batchSize
+        batchInput, batchTarget = inputs[index0: indexBatchSize], targets[index0: indexBatchSize]
+        for y in range(math.ceil(len(inputs) / batchSize)):
+            outputErrors = [[] for temp in range(len(self.layers[-1].neurons))]  # Create list of empty lists
+            for x in range(len(batchInput)):
+                self.setInput(batchInput[x])
+                self.feedForward()
+                self.layers[-1].setErrorLayer(expectedOutput=batchTarget[x])  # Calculate the output errors
+                for z in range(len(self.layers[-1].errors)):
+                    outputErrors[z].append(self.layers[-1].errors[z])
+                self.layers[-1].errors = []
+            index0, indexBatchSize = index0 + batchSize, indexBatchSize + batchSize
+            batchInput, batchTarget = inputs[index0: indexBatchSize], targets[index0: indexBatchSize]
+            for errorIndex in range(len(self.layers[-1].neurons)):
+                outputErrors[errorIndex] = sum(outputErrors[errorIndex]) / len(outputErrors[errorIndex])  # Calculate the mean of the output errors of the batch
+            self.layers[-1].errors = outputErrors
+            for i in range(len(self.layers)):
+                i = i * -1
+                if i == 0:
+                    for neuronIndex in range(len(self.layers[i - 1].neurons)):  # Set the mean errors to the output neurons
+                        self.layers[i - 1].neurons[neuronIndex].error = outputErrors[neuronIndex]
+                else:
+                    self.layers[i - 1].setErrorLayer(expectedOutput=targets[x],  # Calculate the rest of the errors of the network
+                                                     weightsNextLayer=self.layers[i].weights,
+                                                     errorNextLayer=self.layers[i].errors)
+            for i in range(len(self.layers)):
+                i = i * -1
+                self.layers[i - 1].backPropagationLayer(learningRate)
+                self.layers[i - 1].updateLayer()
+        print(self.calculateTotalLoss(inputs, targets))  # Calculate the MSE of the current network
+
+    def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, batchSize: int = 1, maxMSE=0,
+            maxTime: int = None):
         """
         This function fits the neural network
+        :param batchSize:
         :param inputs: A 2d array of inputs
         :param targets: A 2d array of outputs
         :param learningRate: The rate you want the network to learn
@@ -126,7 +171,10 @@ class NeuronNetwork:
         """
         startTime = time.time()
         for epoch in range(epochs):
-            self.train(inputs=inputs, targets=targets, learningRate=learningRate)
+            if batchSize > 1:
+                self.trainBatches(inputs=inputs, targets=targets, learningRate=learningRate, batchSize=batchSize)
+            else:
+                self.train(inputs=inputs, targets=targets, learningRate=learningRate)
             if self.MSE < maxMSE:
                 break
             if maxTime:
