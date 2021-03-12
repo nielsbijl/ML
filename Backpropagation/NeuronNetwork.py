@@ -154,7 +154,7 @@ class NeuronNetwork:
                 i = i * -1
                 self.layers[i - 1].backPropagationLayer(learningRate)
                 self.layers[i - 1].updateLayer()
-        print(self.calculateTotalLoss(inputs, targets))  # Calculate the MSE of the current network
+        self.calculateTotalLoss(inputs, targets)  # Calculate the MSE of the current network
 
     def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, batchSize: int = 1, maxMSE=0,
             maxTime: int = None):
