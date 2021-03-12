@@ -74,11 +74,16 @@ class NeuronNetwork:
         self.MSE = None  # Reset the MSE
         return lossSum
 
-    def calculateTotalLoss(self):
+    def calculateTotalLoss(self, inputs: list, targets: list):
         """
         This function calculates the total loss of the network (AKA MSE)
         :return: Mean Squared Error of the neural network
         """
+        for x in range(len(inputs)):
+            self.setInput(inputs[x])
+            self.feedForward()
+            self.calculateLoss(expectedOutput=targets[x])
+
         MSE = sum(self.losses) / len(self.losses)
         self.losses = []  # Reset the losses
         self.MSE = MSE
@@ -106,8 +111,7 @@ class NeuronNetwork:
                 i = i * -1
                 self.layers[i - 1].backPropagationLayer(learningRate)
                 self.layers[i - 1].updateLayer()
-            self.calculateLoss(expectedOutput=targets[x])
-        self.calculateTotalLoss()
+        print(self.calculateTotalLoss(inputs, targets))
 
     def fit(self, inputs: list, targets: list, learningRate, epochs: int = 1, maxMSE=0, maxTime: int = None):
         """
